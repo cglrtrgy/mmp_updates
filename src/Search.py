@@ -7,7 +7,7 @@ Author  :: Tathagata Chakraborti
 Date    :: 09/29/2016
 '''
 
-from Queue import PriorityQueue, Queue
+from queue import PriorityQueue, Queue
 import copy
 
 '''
@@ -23,13 +23,13 @@ def astarSearch(problem):
 
     fringe.put((problem.heuristic(startState), [startState, []]))
 
-    print "Runnning aStar Search..."
+    print ("Runnning aStar Search...")
     while not fringe.empty():
         
         node = fringe.get()[1]
         goal_check, old_plan = problem.isGoal(node[0])
         if goal_check:
-            print "Goal Found! Number of Nodes Expanded =", numberOfNodesExpanded, node[1]
+            print ("Goal Found! Number of Nodes Expanded =", numberOfNodesExpanded, node[1])
             return node[1]
         #else:
         #    print "Goal not found for", node[1]
@@ -43,7 +43,7 @@ def astarSearch(problem):
             numberOfNodesExpanded += 1
 
             if not numberOfNodesExpanded % 100:
-                print "Number of Nodes Expanded =", numberOfNodesExpanded
+                print ("Number of Nodes Expanded =", numberOfNodesExpanded)
             
             while successor_list:
                 
@@ -65,7 +65,7 @@ def BFSearch(problem):
 
     fringe.put((problem.heuristic(startState), [startState, []]))
 
-    print "Runnning BFS..."
+    print ("Runnning BFS...")
     while not fringe.empty():
         node = fringe.get()[1]
         goal_check, old_plan = problem.isGoal(node[0])
@@ -88,7 +88,7 @@ def BFSearch(problem):
                     numberOfNodesExpanded += 1
                     #print successor_list, node[1]
                     if not numberOfNodesExpanded % 100:
-                        print "Number of Nodes Expanded =", numberOfNodesExpanded
+                        print ("Number of Nodes Expanded =", numberOfNodesExpanded)
 
                     while successor_list:
 

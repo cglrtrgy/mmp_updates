@@ -21,7 +21,7 @@ class Problem:
                  ground_flag, approx_flag, heuristic_flag,
                  problemTemplate, humanProblemFile=None, robotPlanFile=None):
 
-        print "Setting up MMP..."
+        print ("Setting up MMP...")
 
         if humanProblemFile == None:
             humanProblemFile = robotProblemFile
@@ -88,8 +88,8 @@ class Problem:
         self.initialState = copy.copy(self.robot_state)
         self.goalState = copy.copy(self.human_state)
         k_plan = BFSearch(self)
-        #print set(k_plan)
-        #print ((set(self.initialState) - set(self.human_state))| (set(self.human_state) - set(self.initialState)))
+        #print (set(k_plan))
+        #print (((set(self.initialState) - set(self.human_state))| (set(self.human_state) - set(self.initialState))))
         return list(((set(self.initialState) - set(self.human_state))| (set(self.human_state) - set(self.initialState)))
                     - set(k_plan))
 

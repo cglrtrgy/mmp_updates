@@ -135,7 +135,7 @@ def read_state_from_domain_file(domainFileName, problemFileName):
                                                         description).group(1))}
 
         except Exception as exc:
-            print "exception",exc
+            print ("exception",exc)
             #print description
             effects        = {}
             

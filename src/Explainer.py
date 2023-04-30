@@ -39,13 +39,13 @@ def main():
  
 
     if not sys.argv[1:] or '-h' in sys.argv[1:]:
-        print parser.print_help()
+        print (parser.print_help())
         sys.exit(1)
     args = parser.parse_args()
 
 
     if args.search.lower() not in SEARCH_OPTIONS:
-        print "Unknown: Search option, please select either ME or MCE"
+        print ("Unknown: Search option, please select either ME or MCE")
         sys.exit(1)
 
 
@@ -58,14 +58,14 @@ def main():
         plan = pr_obj.MeSearch()
     else:
         if args.approx and args.heuristic:
-            print "MCE doesn't support heuristic or approx"
+            print ("MCE doesn't support heuristic or approx")
             exit(1)
         plan = pr_obj.MCESearch()
     explanation      = ''
     for item in plan:
         explanation += "Explanation >> {}\n".format(item)
 
-    print explanation.strip()
+    print (explanation.strip())
     with open('exp.dat', 'w') as explanation_file:
         explanation_file.write(explanation.strip())
 
