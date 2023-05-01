@@ -23,6 +23,9 @@ def astarSearch(problem):
 
     fringe.put((problem.heuristic(startState), [startState, []]))
 
+    #Create a plan list to save all the plans, not just the optimal
+    plan_list = []
+
     print ("Runnning aStar Search...")
     while not fringe.empty():
         
@@ -30,7 +33,12 @@ def astarSearch(problem):
         goal_check, old_plan = problem.isGoal(node[0])
         if goal_check:
             print ("Goal Found! Number of Nodes Expanded =", numberOfNodesExpanded, node[1])
-            return node[1]
+
+            #If we find the goal don't stop the search, so don't return
+            #add the plan to plan_list
+            plan_list.append(node[1])
+
+            # return node[1]
         #else:
         #    print "Goal not found for", node[1]
 
@@ -52,7 +60,10 @@ def astarSearch(problem):
                 
                 fringe.put((problem.heuristic(candidate_node[0]) + len(new_node[1]), new_node))
 
-    return None
+    #search will and when there is nothing in the fringe
+    #so return plan_list
+    return plan_list
+    #return None
 
 def BFSearch(problem):
 

@@ -111,7 +111,10 @@ class Problem:
             return (False, plan)
 
         plan, cost       = get_plan(temp_domain, temp_problem)
-        optimality_flag  = cost == self.cost
+
+        #Don't check for the optimality
+        # optimality_flag  = cost == self.cost
+        optimality_flag = False
         return (optimality_flag, plan)
 
     def approx_isGoal(self, state):
@@ -150,12 +153,20 @@ class Problem:
         for item in add_set:
             new_state    = copy.deepcopy(state)
             new_state.add(item)
-            listOfSuccessors.append([list(new_state), item])
+            # listOfSuccessors.append([list(new_state), item])
+            
+            # Check if new_state is not a superset of any existing state in listOfSuccessors
+            if not any(set(s[0]).issubset(new_state) for s in listOfSuccessors):
+                listOfSuccessors.append([list(new_state), item])
 
         for item in del_set:
             new_state    = copy.deepcopy(state)
             new_state.remove(item)
-            listOfSuccessors.append([list(new_state), item])
+            # listOfSuccessors.append([list(new_state), item])
+
+            # Check if new_state is not a superset of any existing state in listOfSuccessors
+            if not any(set(s[0]).issubset(new_state) for s in listOfSuccessors):
+                listOfSuccessors.append([list(new_state), item])
             
         return listOfSuccessors
 

@@ -61,13 +61,17 @@ def main():
             print ("MCE doesn't support heuristic or approx")
             exit(1)
         plan = pr_obj.MCESearch()
-    explanation      = ''
-    for item in plan:
-        explanation += "Explanation >> {}\n".format(item)
 
-    print (explanation.strip())
-    with open('exp.dat', 'w') as explanation_file:
-        explanation_file.write(explanation.strip())
+        #we return plan list
+        plan_list = plan
+        print(plan_list)
+    # explanation      = ''
+    # for item in plan:
+    #     explanation += "Explanation >> {}\n".format(item)
+
+    # print (explanation.strip())
+    # with open('exp.dat', 'w') as explanation_file:
+    #     explanation_file.write(explanation.strip())
 
 
 if __name__ == '__main__':
