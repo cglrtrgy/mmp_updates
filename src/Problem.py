@@ -26,6 +26,9 @@ class Problem:
         if humanProblemFile == None:
             humanProblemFile = robotProblemFile
 
+        #new list
+        self.solutions = []
+
 
         self.domainTemplate = domainTemplate
         self.problemTemplate = problemTemplate
@@ -77,6 +80,14 @@ class Problem:
             grounded_human_plan, self.human_grounded_plan_cost = get_plan('tr-domain.pddl', 'tr-problem.pddl')
             self.grounded_human_plan =  set([i for i in grounded_human_plan])
 
+
+
+    def add_solution(self, new_solution):
+        self.solutions.append(new_solution)
+    
+    def get_solution(self):
+        return self.solutions
+    
     def MeSearch(self):
         self.initialState = copy.copy(self.human_state)
         self.goalState = copy.copy(self.robot_state)
@@ -103,18 +114,23 @@ class Problem:
 
     def orig_isGoal(self, state):
         temp_domain, temp_problem = write_domain_file_from_state(state, self.domainTemplate, self.problemTemplate)
-        feasibility_flag = validate_plan(temp_domain, temp_problem, self.groundedRobotPlanFile)
-        if not feasibility_flag:
-            plan = []
-            if self.heuristic_flag:
-                plan, cost = get_plan(temp_domain, temp_problem)
-            return (False, plan)
+        # feasibility_flag = validate_plan(temp_domain, temp_problem, self.groundedRobotPlanFile)
+        # if not feasibility_flag:
+        #     plan = []
+        #     if self.heuristic_flag:
+        #         plan, cost = get_plan(temp_domain, temp_problem)
+        #     return (False, plan)
 
         plan, cost       = get_plan(temp_domain, temp_problem)
 
         #Don't check for the optimality
         # optimality_flag  = cost == self.cost
         optimality_flag = False
+
+        solution_list = self.solutions
+
+        if len(plan) > 0:
+            optimality_flag = True
         return (optimality_flag, plan)
 
     def approx_isGoal(self, state):
@@ -154,18 +170,15 @@ class Problem:
             new_state    = copy.deepcopy(state)
             new_state.add(item)
             # listOfSuccessors.append([list(new_state), item])
-            
-            # Check if new_state is not a superset of any existing state in listOfSuccessors
-            if not any(set(s[0]).issubset(new_state) for s in listOfSuccessors):
+            if not any(set(new_state).issuperset(s) for s in solution_list):
                 listOfSuccessors.append([list(new_state), item])
+                # print("NNoooooooooooooooot SUPERSET")
 
         for item in del_set:
             new_state    = copy.deepcopy(state)
             new_state.remove(item)
             # listOfSuccessors.append([list(new_state), item])
-
-            # Check if new_state is not a superset of any existing state in listOfSuccessors
-            if not any(set(s[0]).issubset(new_state) for s in listOfSuccessors):
+            if not any(set(new_state).issuperset(s) for s in solution_list):
                 listOfSuccessors.append([list(new_state), item])
             
         return listOfSuccessors
