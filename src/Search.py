@@ -33,10 +33,11 @@ def astarSearch(problem):
         goal_check, old_plan = problem.isGoal(node[0])
         if goal_check:
             print ("Goal Found! Number of Nodes Expanded =", numberOfNodesExpanded, node[1])
+            problem.add_solution(node[1])
 
             #If we find the goal don't stop the search, so don't return
             #add the plan to plan_list
-            plan_list.append(node[1])
+            # plan_list.append(node[1])
 
             # return node[1]
         #else:
@@ -62,8 +63,8 @@ def astarSearch(problem):
 
     #search will and when there is nothing in the fringe
     #so return plan_list
-    return plan_list
-    #return None
+    # return plan_list
+    return None
 
 def BFSearch(problem):
 
